@@ -12,8 +12,8 @@ const app = express();
 const hostname = process.env.NODE_HOSTNAME;
 const port = process.env.NODE_PORT;
 
-app.use(helmet());
 app.use(cors());
+app.use(helmet());
 app.use(compression());
  
 app.get('/', (req, res) => {
