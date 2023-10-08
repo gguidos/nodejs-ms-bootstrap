@@ -1,15 +1,13 @@
-const http = require('http');
-import * as express from 'express';
+import * as dotenv from "dotenv";
+dotenv.config()
 
-const hostname = '127.0.0.1';
-const port = 3000;
- 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World!');
-});
- 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+import { server } from './initializers/express'
+
+try {
+  server()
+  process.on('uncaughtException', (err) => {
+    console.error('[SERVICE] Caught exception: ' + err);
+  });
+} catch (error) {
+  console.log(error)
+}
