@@ -1,15 +1,19 @@
-const http = require('http');
-import * as express from 'express';
+import * as dotenv from "dotenv";
+dotenv.config()
 
-const hostname = '127.0.0.1';
-const port = 3000;
+import * as express from 'express';
+import * as compression from 'compression';
+import * as helmet from 'helmet';
+import * as cors from 'cors';
+
+const app = express();
+const hostname = process.env.NODE_HOSTNAME;
+const port = process.env.NODE_PORT;
  
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World!');
-});
+app.get('/', (req, res) => {
+  res.end('Hello world!');
+})
  
-server.listen(port, hostname, () => {
+app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
