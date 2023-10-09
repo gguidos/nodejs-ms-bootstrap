@@ -1,5 +1,5 @@
 export default function createServer({ 
-  express, app, handler, cors, compression, helmet
+  express, app, handler, cors, compression, helmet, logger
 }) {
   return Object.freeze({ server })
 
@@ -18,7 +18,7 @@ export default function createServer({
     }
 
     app.listen(port, hostname, () => {
-      console.log(`Server running at http://${hostname}:${port}/`);
+      logger.info(`[EXPRESS] Server running at http://${hostname}:${port}/`);
     });
   }
 }

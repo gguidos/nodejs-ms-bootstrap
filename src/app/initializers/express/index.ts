@@ -6,11 +6,12 @@ import * as helmet from 'helmet';
 import createServer from './libs/express';
 import * as handler from '../../component/handler'
 
+const logger = require('../../libs/logger');
 const app = express();
 
 const server = () =>
   createServer({ 
-    express, app, handler, cors, compression, helmet 
+    express, app, handler, cors, compression, helmet, logger
   })
   .server({
     hostname: process.env.NODE_HOSTNAME,
