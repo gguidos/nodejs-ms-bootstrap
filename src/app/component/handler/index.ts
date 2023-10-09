@@ -1,14 +1,25 @@
-const { dirname } = require('path');
+const fileFolder = process.env.NODE_FILE_FOLDER;
+const baseDir = process.cwd()
+const users = require(`${ baseDir }${ fileFolder }/users.json`);
 
-const users = require(`${ process.cwd() }${ process.env.NODE_FILE_FOLDER }/users.json`);
+const baseUrl = '/api/v1'
 
 const routes = [
-  { path: '/register', method: 'get', component: register }
+  { path: `${baseUrl}/authenticate`, method: 'get', component: authenticate },
+  { path: `${baseUrl}/find/:username`, method: 'get', component: findUser },
+  { path: `${baseUrl}/register`, method: 'post', component: register }
 ]
 
+function findUser(req,res) {
+  res.json(req.params)
+}
+
+function authenticate(req, res) {
+  res.json(req.query)
+}
+
 function register(req, res) {
-  console.log(users)
-  res.end('Hello world!');
+  res.json(req.body);
 }
 
 export {

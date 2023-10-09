@@ -1,14 +1,17 @@
 export default function createServer({ 
-  app, handler, cors, compression, helmet
+  express, app, handler, cors, compression, helmet
 }) {
   return Object.freeze({ server })
 
   function server({ hostname, port }) {
     const routes = handler.routes;
+
     app.use(helmet());
     app.options('*', cors({credentials: true, origin: true}));
     app.use(cors());
     app.use(compression());
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }))
 
     for(let route of routes) {
       app[route.method](`${ route.path }`, route.component);

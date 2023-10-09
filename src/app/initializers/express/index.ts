@@ -10,7 +10,7 @@ const app = express();
 
 const server = () =>
   createServer({ 
-    app, handler, cors, compression, helmet 
+    express, app, handler, cors, compression, helmet 
   })
   .server({
     hostname: process.env.NODE_HOSTNAME,
