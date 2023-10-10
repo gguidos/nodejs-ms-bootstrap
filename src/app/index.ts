@@ -1,12 +1,11 @@
 import * as dotenv from "dotenv";
 dotenv.config()
 
-const logger = require('./libs/logger');
-
 import * as express from 'express';
 import helmet from 'helmet';
 import * as cors from 'cors';
 import * as compression from 'compression';
+import { logger } from './libs/logger';
 
 const app = express();
 const hostname = process.env.NODE_HOSTNAME;
