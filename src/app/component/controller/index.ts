@@ -3,9 +3,9 @@ import { post } from './libs';
 const baseUrl = '/api/v1';
 
 const get = (req,res) => res.json({ data: 'Hello, world!' });
-const postEP = async (req, res) => {
+const postEP = (req, res) => {
   try { 
-    const results = await post({ params: req.body });
+    const results = post({ params: req.body });
     res.json({ data: results });
   } catch (err) {
     logger.error(err)
