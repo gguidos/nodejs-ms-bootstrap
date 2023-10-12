@@ -1,14 +1,15 @@
 require('dotenv').config();
 
 import { server } from './initializers/express';
-const logger = require('./libs/logger');
+import { logger } from './libs/logger';
+
+const name = process.env.NAME;
+const hostname = process.env.NODE_HOSTNAME;
+const port = process.env.NODE_PORT;
 
 try {
-  logger.info('[AUTH MS] Boostrapping micro service');
-  server();
-  process.on('uncaughtException', (err) => {
-    logger.error(`[AUTH MS] Caught exception: ${ err }`);
-  });
+  logger.info(`[${ name }] Boostrapping micro service`);
+  server({ hostname, port});
 } catch (error) {
-  logger.error(`[AUTH MS] Caught exception: ${ error }`);
+  logger.error(`[${ name }] Caught exception: ${ error }`);
 }

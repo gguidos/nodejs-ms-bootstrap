@@ -4,19 +4,18 @@ import * as compression from 'compression';
 import * as cors from 'cors';
 import * as helmet from 'helmet';
 import createServer from './libs/express';
-import * as handler from '../../component/handler'
+import { routes } from '../../component/controller'
+import { logger } from '../../libs/logger'
 
-const logger = require('../../libs/logger');
 const app = express();
+const json = express.json;
+const urlencoded = express.urlencoded;
 
-const server = () =>
+const server = ({ hostname, port }) =>
   createServer({ 
-    express, app, handler, cors, compression, helmet, logger
+    json, urlencoded, app, cors, compression, helmet, logger
   })
-  .server({
-    hostname: process.env.NODE_HOSTNAME,
-    port: process.env.NODE_PORT
-  });
+  .server({ hostname, port, routes });
 
 export {
   server

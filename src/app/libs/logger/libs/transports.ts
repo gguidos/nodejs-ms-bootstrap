@@ -14,6 +14,13 @@ export default function createLogger( { format, transports }) {
             logFormat
           )
       }),
+      new transports.Console({
+        level: 'error',
+        format: combine(
+          colorize(),
+          logFormat
+        )
+    }),
       new transports.File({
           filename: filePath + '/error.log',
           handleExceptions: true,

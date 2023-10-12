@@ -1,9 +1,9 @@
 const fileFolder = process.env.NODE_FILE_FOLDER;
 const baseDir = process.cwd()
 const users = require(`${ baseDir }${ fileFolder }/users.json`);
-import { findUser } from './libs'
-const logger = require('../../libs/logger')
-const baseUrl = '/api/v1/users'
+import { findUser } from '../controller/libs';
+const logger = require('../../libs/logger');
+const baseUrl = '/api/v1/users';
 
 const routes = [
   { path: `${baseUrl}/authenticate`, method: 'get', component: authenticate },
@@ -13,10 +13,10 @@ const routes = [
 
 function find(req,res) {
   try {
-    const results = findUser()
-    res.json(results)
+    const results = findUser();
+    res.json(results);
   } catch (err) {
-    logger.error(err)
+    logger.error(err);
    }
   
 }
