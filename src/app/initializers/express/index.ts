@@ -4,8 +4,8 @@ import * as compression from 'compression';
 import * as cors from 'cors';
 import * as helmet from 'helmet';
 import createServer from './libs/express';
-import { routes } from '../../component/controller'
-import { logger } from '../../libs/logger'
+import { routes } from '../../component/controller';
+import { logger } from '../../libs/logger';
 
 const app = express();
 const json = express.json;

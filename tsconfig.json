@@ -1,4 +1,7 @@
 {
+	"ts-node": {
+    "transpileOnly": true
+  },
 	"compilerOptions": {
 		"allowJs": true,
 		"target": "es6",
@@ -7,11 +10,15 @@
 		"inlineSourceMap": true,
 		"outDir": "build",
 		"rootDir": "src",
+		"typeRoots": [
+			"./node_modules/@types",
+			"./typings"
+		],
 		"types": ["node", "mocha", "jest"],
 		"skipLibCheck": true
 	},
 	"exclude": [
-		"nodemon.js",
+		"nodemon.json",
 		"node_modules",
 		"build",
 		"src/app/public",

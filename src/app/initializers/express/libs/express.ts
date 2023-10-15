@@ -11,6 +11,11 @@ export default function createServer({
     app.use(json());
     app.use(urlencoded({ extended: true }))
 
+    app.use((req, res, next) => {
+      logger.info(`[EXPRESS] Connection received: ${req.ip}:${req.path}:${req.method}`);
+      next();
+    })
+
     for(let route of routes) {
       app[route.method](`${ route.path }`, route.component);
     }
