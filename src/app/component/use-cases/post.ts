@@ -1,63 +1,37 @@
 export default function createPost({
-  access,
-  mkdir,
-  writeFile,
-  readFile,
+  makeInputObj,
+  checkDir,
+  readFromFile,
+  writeToFile,
   logger,
 }) {
   return Object.freeze({ post });
-
-  async function post({
-    params,
-    filename,
-    fileDirPath,
-    fileDirName,
-    filePath,
-    errorMsgs }){
+  
+  async function post({ params, filename, fileDirPath, fileDirName, filePath, }){
+    let user;
     try {
-      if (params.username === undefined ||
-        params.password === undefined) throw new Error(errorMsgs.NO_DATA);
-        
-      logger.info(`[USE-CASE][POST] Inserting user to ${ filename } - START!`);
-      await access(filePath);
+      logger.info('[POST][USE-CASE] Inserting object process - START!');
+      const userFactory = makeInputObj({ params });
 
-      logger.info(`[USE-CASE][POST] Reading file ${ filename } - START!`);
-      const fileContents = await readFile(filePath, { encoding: 'utf8' });
-      const users = JSON.parse(fileContents)
-      logger.info(`[USE-CASE][POST] Reading file ${ filename } - DONE!`);
-      
-      logger.info(`[USE-CASE][POST] Validating params  - START!`);
-
-      const existingUser = users.filter(user => user.username === params.username);
-      if (existingUser.length) throw new Error(errorMsgs.EXISTING_USER);
-      logger.info(`[USE-CASE][POST] Validating params  - DONE!`);
-      
-      logger.info(`[USE-CASE][POST] Writing to file ${ filename }  - START!`);
-      users.push(params);
-      await writeFile(filePath, JSON.stringify(users));
-      logger.info(`[USE-CASE][POST] Writing to file ${ filename }  - DONE!`);
-      
-      logger.info(`[USE-CASE][POST] Inserting user to ${ filename } - DONE!`);
-      return params;
-    } catch (e){
-      if (
-        e.message === errorMsgs.NO_DATA ||
-        e.message === errorMsgs.EXISTING_USER
-      ) {
-        throw e.message;
+      user = {
+        username: userFactory.username(),
+        password: userFactory.password(),
+        created: userFactory.created(),
+        modified: userFactory.modified()
       }
 
-      logger.info(`[USE-CASE][POST] Creating directory: ${fileDirName}  - START!`);
-      await mkdir(fileDirPath)
-      logger.info(`[USE-CASE][POST] Creating directory: ${fileDirName} - DONE!`);
+      await checkDir({ fileDirPath, fileDirName })
+      const content = await readFromFile({ filePath, filename});
+      const duplicate = content.filter(el => el.username === user.username);
 
-      logger.info(`[USE-CASE][POST] Creating and writing to file ${ filename }  - START!`);
-      await writeFile(filePath, JSON.stringify([params]));
-      logger.info(`[USE-CASE][POST] Creating and writing to file ${ filename }  - DONE!`);
-
-      logger.info(`[USE-CASE][POST] Inserting user to ${ filename } - DONE!`);
-
-      return params;
+      if (duplicate.length) throw new Error('Existing user');
+      content.push(user);
+      await writeToFile({ content, filePath, filename });
+      logger.info('[POST][USE-CASE] Inserting object process - DONE!');
+      return user;
+    } catch (e){
+      logger.info('[POST][USE-CASE] Inserting object process - DONE!');
+      throw e
     }
   }
 }
