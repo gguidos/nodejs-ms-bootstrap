@@ -1,15 +1,13 @@
-import {
-  access,
-  mkdir,
-  writeFile,
-  readFile
-} from 'node:fs/promises';
 import createPost from './post';
 import createGet from './get';
 import config from '../../config';
 import { logger } from '../../libs/logger';
 import { makeInputObj } from '../entities';
-import { checkDir, writeToFile, readFromFile } from '../data-access';
+import {
+  checkDir,
+  writeToFile,
+  readFromFile
+} from '../data-access';
 
 const fileDirName = config.FILE_FOLDER_NAME;
 const fileDirPath = config.FILE_FOLDER_PATH;
@@ -24,14 +22,14 @@ const post = ({ params }) =>
     writeToFile,
     readFromFile,
     logger
-  }).post({ params, filename, fileDirPath, fileDirName, filePath, errorMsgs });
-
-const get = ({ params }) =>
-  createGet({
-    access,
-    readFile,
-    logger 
-  }).get({ params, filePath, filename });
+  }).post({
+    params,
+    filename,
+    fileDirPath,
+    fileDirName,
+    filePath,
+    errorMsgs
+  });
 
 export {
   post,

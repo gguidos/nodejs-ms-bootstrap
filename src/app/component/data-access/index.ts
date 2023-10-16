@@ -1,4 +1,9 @@
-import { access, mkdir, writeFile, readFile } from 'node:fs/promises';
+import {
+  access,
+  mkdir,
+  writeFile,
+  readFile
+} from 'node:fs/promises';
 import config from '../../config';
 import { logger } from '../../libs/logger';
 import makeCheckDir from './check-dir';

@@ -2,29 +2,22 @@
 require('dotenv').config();
 
 const expect = require('chai').expect;
-import { makeInputObj } from '../../app/component/entities';
-import { checkDir, readFromFile, writeToFile } from '../../app/component/data-access';
-import createPost from '../../app/component/use-cases/post';
 import * as path from 'path';
 import config from '../config';
 import { logger } from '../../app/libs/logger';
-
-import {
-  access,
-  mkdir,
-  writeFile,
-  readFile,
-  rm
-} from 'node:fs/promises';
+import { makeInputObj } from '../../app/component/entities';
+import { checkDir, readFromFile, writeToFile } from '../../app/component/data-access';
+import createPost from '../../app/component/use-cases/post';
 
 const post = ({ params }) => 
-createPost({
-  makeInputObj,
-  checkDir,
-  readFromFile,
-  writeToFile,
-  logger
-}).post({
+  createPost({
+    makeInputObj,
+    checkDir,
+    readFromFile,
+    writeToFile,
+    logger
+  })
+  .post({
     params,
     filename: config.FILE_DB_NAME,
     fileDirPath: config.FILE_FOLDER_PATH,
@@ -83,6 +76,3 @@ describe('Post', () => {
     expect(Object.keys(JSON.parse(results)).length).to.equal(2)
 	});
 })
-
-
-

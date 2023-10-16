@@ -1,4 +1,7 @@
-export default function makeReadFromFile({ readFile, logger }) {
+export default function makeReadFromFile({
+  readFile,
+  logger
+}) {
   return Object.freeze({ readFromFile })
   
   async function readFromFile({ filePath, filename }) {

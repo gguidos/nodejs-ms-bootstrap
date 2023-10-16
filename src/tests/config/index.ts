@@ -1,5 +1,5 @@
 import * as path from 'path';
-const APP_NAME = process.env.NODE_NAME;
+const APP_NAME = 'AUTH-MS-TEST';
 const NODE_ENV = 'test';
 const FILE_FOLDER_NAME = 'data';
 const FILE_FOLDER_PATH = path.join(__dirname, '/data/');
