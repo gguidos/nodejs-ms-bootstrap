@@ -7,7 +7,7 @@ export default function createPost({
 }) {
   return Object.freeze({ post });
   
-  async function post({ params, filename, fileDirPath, fileDirName, filePath, }){
+  async function post({ params, filename, fileDirPath, fileDirName, filePath, errorMsgs}){
     let user;
     try {
       logger.info('[POST][USE-CASE] Inserting object process - START!');
@@ -24,7 +24,7 @@ export default function createPost({
       const content = await readFromFile({ filePath, filename});
       const duplicate = content.filter(el => el.username === user.username);
 
-      if (duplicate.length) throw new Error('Existing user');
+      if (duplicate.length) throw new Error(errorMsgs.EXISTING_USER);
       content.push(user);
       await writeToFile({ content, filePath, filename });
       logger.info('[POST][USE-CASE] Inserting object process - DONE!');

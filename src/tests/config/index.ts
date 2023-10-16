@@ -7,7 +7,7 @@ const FILE_DB_NAME = 'users.json';
 const FILE_DB_PATH = `${ FILE_FOLDER_PATH }/${ FILE_DB_NAME }`;
 const ERROR_MSG = {
   post: {
-    NO_DATA: 'no data to insert',
+    MISSING_PARAMETER: 'missing parameter: ',
     EXISTING_USER: 'user already exists'
   }
 

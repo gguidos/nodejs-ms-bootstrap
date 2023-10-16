@@ -1,35 +1,38 @@
 export default function makeInputObjectFactory({ md5, sanitize }) {
   return Object.freeze({ inputObj })
-  
+  let localErrorMsgs = {};
   function inputObj({ params, errorMsgs }){
-    try { 
-      const {
-        username,
-        password,
-        created = Date.now(),
-        modified = Date.now()
-      } = params;
+    const {
+      username,
+      password,
+      created = Date.now(),
+      modified = Date.now()
+    } = params;
 
-      return Object.freeze({
-        username: () => checkUsername({ username }),
-        password: () => checkPassword({ password }),
-        created: () => created,
-        modified: () => modified
-      })
-    } 
-    catch (e) {
-      throw e
-    }
+    return Object.freeze({
+      username: () => checkUsername({ username, errorMsgs }),
+      password: () => checkPassword({ password, errorMsgs }),
+      created: () => created,
+      modified: () => modified
+    })
   }
 
-  function checkUsername({ username }) {
-    checkRequiredParam({ param: username, paramName: 'username' })
+  function checkUsername({ username, errorMsgs }) {
+    checkRequiredParam({
+      param: username,
+      paramName: 'username',
+      errorMsgs
+    });
     username = sanitize(username);
     return username;
   }
 
-  function checkPassword({ password }) {
-    checkRequiredParam({ param: password, paramName: 'password' });
+  function checkPassword({ password, errorMsgs }) {
+    checkRequiredParam({
+      param: password,
+      paramName: 'password',
+      errorMsgs
+    });
     password = sanitize(password);
     password = hash({ param: password });
     return password;
@@ -39,9 +42,9 @@ export default function makeInputObjectFactory({ md5, sanitize }) {
     return md5(param);
   }
 
-  function checkRequiredParam({ param, paramName }) {
+  function checkRequiredParam({ param, paramName, errorMsgs }) {
     if (!param || param === '')
-      throw new Error(`Missing required parameter: ${paramName}`)
+      throw new Error(`${ errorMsgs.MISSING_PARAMETER }${paramName}`)
     return;
    }
 }
