@@ -6,7 +6,11 @@ import * as path from 'path';
 import config from '../config';
 import { logger } from '../../app/libs/logger';
 import { makeInputObj } from '../../app/component/entities';
-import { checkDir, readFromFile, writeToFile } from '../../app/component/data-access';
+import {
+  checkDir,
+  readFromFile,
+  writeToFile
+} from '../../app/component/data-access';
 import createPost from '../../app/component/use-cases/post';
 
 const post = ({ params }) => 

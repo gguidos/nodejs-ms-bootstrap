@@ -1,5 +1,4 @@
 import createPost from './post';
-import createGet from './get';
 import config from '../../config';
 import { logger } from '../../libs/logger';
 import { makeInputObj } from '../entities';

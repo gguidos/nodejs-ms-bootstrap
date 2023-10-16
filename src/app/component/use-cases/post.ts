@@ -7,7 +7,14 @@ export default function createPost({
 }) {
   return Object.freeze({ post });
   
-  async function post({ params, filename, fileDirPath, fileDirName, filePath, errorMsgs}){
+  async function post({
+    params,
+    filename,
+    fileDirPath,
+    fileDirName,
+    filePath,
+    errorMsgs
+  }){
     let user;
     try {
       logger.info('[POST][USE-CASE] Inserting object process - START!');
