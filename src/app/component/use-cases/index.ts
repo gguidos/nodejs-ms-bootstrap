@@ -32,6 +32,5 @@ const post = ({ params }) =>
   });
 
 export {
-  post,
-  get
+  post
 }
