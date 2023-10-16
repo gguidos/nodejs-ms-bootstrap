@@ -39,8 +39,12 @@ describe('Post', () => {
       username: config.TEST_DATA.user1.username,
       password: config.TEST_DATA.user1.password
     }
-    let results = await post({ params });
-    expect(results).to.have.property('username').equal(params.username)
+    const results = await post({ params });
+    const fileContent = await readFile(config.FILE_DB_PATH);
+    const users = JSON.parse(fileContent)
+    expect(results).to.have.property('username').equal(params.username);
+    expect(users.length).to.equal(1);
+    expect(users[0]).to.have.property('username').equal(params.username);
 	});
 
   it('should not insert an empty user', async () => {
