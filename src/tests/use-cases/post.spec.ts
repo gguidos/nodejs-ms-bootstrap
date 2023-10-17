@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 require('dotenv').config();
-
+import { rm, readFile } from 'node:fs/promises';
 const expect = require('chai').expect;
 import * as path from 'path';
 import config from '../config';
