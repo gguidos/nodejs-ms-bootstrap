@@ -5,6 +5,7 @@ export default function makeInputObjectFactory({ md5, sanitize }) {
     const {
       username,
       password,
+      email,
       created = Date.now(),
       modified = Date.now()
     } = params;
@@ -12,6 +13,8 @@ export default function makeInputObjectFactory({ md5, sanitize }) {
     return Object.freeze({
       username: () => checkUsername({ username, errorMsgs }),
       password: () => checkPassword({ password, errorMsgs }),
+      email: () => checkEmail({ email, errorMsgs }),
+      hash: () => md5(username + email),
       created: () => created,
       modified: () => modified
     })
@@ -37,9 +40,26 @@ export default function makeInputObjectFactory({ md5, sanitize }) {
     password = hash({ param: password });
     return password;
   }
+
+  function checkEmail({ email, errorMsgs }) {
+    checkRequiredParam({
+      param: email,
+      paramName: 'email',
+      errorMsgs
+    });
+    email = sanitize(email);
+    if (!isEmail({ email })) throw new Error(errorMsgs.INVALID_EMAIL);
+
+    return email;
+  }
   
   function hash({ param }) {
     return md5(param);
+  }
+
+  function isEmail({ email }) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   }
 
   function checkRequiredParam({ param, paramName, errorMsgs }) {

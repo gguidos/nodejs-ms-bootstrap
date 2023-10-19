@@ -6,10 +6,21 @@ const FILE_FOLDER_NAME = process.env.NODE_FILE_FOLDER;
 const FILE_FOLDER_PATH = process.cwd() + process.env.NODE_FILE_FOLDER;
 const FILE_DB_NAME = process.env.NODE_DB_FILE;
 const FILE_DB_PATH = `${ FILE_FOLDER_PATH }/${ FILE_DB_NAME }`;
+const MONGO_DB_URL = process.env.MONGO_DB_URL;
+const MONGO_DB_NAME = process.env.MONGO_DB_NAME;
+const MONGO_DB_COLLECTION = process.env.MONGO_DB_COLLECTION;
+
+const DB_CONFIG = {
+  dbName: 'db_my_app',
+  dbUri: `${ process.env.MONGODB_DB_URL}/${ process.env.MONGODB_DB_NAME }`,
+  dbColl: 'coll_users'
+}
+
 const ERROR_MSG = {
   post: {
     MISSING_PARAMETER: 'missing parameter: ',
-    EXISTING_USER: 'user already exists'
+    EXISTING_USER: 'user already exists',
+    INVALID_EMAIL: 'invalid email'
   }
 };
 
@@ -19,8 +30,5 @@ export default Object.freeze({
   NODE_ENV,
   NODE_HOSTNAME,
   NODE_PORT,
-  FILE_FOLDER_NAME,
-  FILE_FOLDER_PATH,
-  FILE_DB_NAME,
-  FILE_DB_PATH
+  DB_CONFIG
 })
