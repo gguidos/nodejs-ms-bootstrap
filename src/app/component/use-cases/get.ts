@@ -1,15 +1,15 @@
-export default function createGet({ access, readFile, logger }) {
+export default function createGetCached({ getCache, logger }) {
   return Object.freeze({ get })
   
-  async function get({ params, filePath, filename }){
+  async function get({ params, cacheConfig }){
     try {
-      logger.info(`[USE-CASE][GET] Reading from file${ filename } - START!`);
-      await access(filePath)
-      const fileContent = await readFile(filePath)
-      logger.info(`[USE-CASE][GET] Reading from file${ filename } - DONE!`);
-      return JSON.parse(fileContent)
+      logger.info(`[USE-CASE][GET] Reading from cache - START!`);
+      const cacheKey = cacheConfig.cacheKeyPrefix + params.hash;
+      const fileContent = await getCache({ cacheKey, cacheConfig });
+      logger.info(`[USE-CASE][GET] Reading from cache - DONE!`);
+      return JSON.parse(fileContent);
     } catch (e) {
-      throw e.message
+      throw e
     }
   }
 }

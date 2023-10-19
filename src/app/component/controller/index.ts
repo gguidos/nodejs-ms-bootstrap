@@ -26,7 +26,7 @@ const postEP = async (req, res) => {
 }
 
 const routes = [
-  { path: `${baseUrl}/`, method: 'get', component: getEP },
+  { path: `${baseUrl}/:hash`, method: 'get', component: getEP },
   { path: `${baseUrl}/`, method: 'post', component: postEP }
 ];
 
