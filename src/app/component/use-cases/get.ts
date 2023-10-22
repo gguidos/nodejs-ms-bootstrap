@@ -1,26 +1,42 @@
 export default function createGet({
   makeInputObj,
   findDocuments,
+  makeOutputObj,
   logger
 }) {
   return Object.freeze({ get })
   
   async function get({ params, dbConfig, errorMsgs }){
-    console.log(params)
     logger.info(`[USE-CASE][GET] Reading from db - START!`);
     Object.keys(params).forEach(key => params[key] === undefined && delete params[key])
 
+    console.log(params)
     if (Object.values(params).length) {
       const userFactory = makeInputObj({ params });
+
       params = { 
-        username: !params.username ? undefined : userFactory.username(),
-        email: !params.email ? undefined : userFactory.email()
+        usernameHash: !params.username ? undefined : userFactory.usernameHash(),
+        emailHash: !params.email ? undefined : userFactory.emailHash(),
+        usernamePasswordHash: !params.usernamePasswordHash ? undefined : userFactory.usernamePasswordHash()
       };
+
       Object.keys(params).forEach(key => params[key] === undefined && delete params[key])
     }
     
-    const fileContent = await findDocuments({ query: params, dbConfig });
+    console.log(params)
+    // 'and' query
+    const dbResults = await findDocuments({ query: params, dbConfig });
 
-    return  fileContent
+    const results = dbResults.map(post => {
+      const resultsObj = makeOutputObj({ params: post });
+      return ({
+        username: resultsObj.username(),
+        email: resultsObj.email(),
+        created: resultsObj.created(),
+        modified: resultsObj.modified()
+      })
+    })
+
+    return  results;
   }
 }

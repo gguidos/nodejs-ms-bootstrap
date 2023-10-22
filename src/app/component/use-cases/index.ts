@@ -2,7 +2,7 @@ import createPost from './post';
 import createGet from './get';
 import config from '../../config';
 import { logger } from '../../libs/logger';
-import { makeInputObj } from '../entities';
+import { makeInputObj, makeOutputObj } from '../entities';
 import { insertDocument, findDocuments } from '../data-access';
 import { insertOneDocument } from '../../libs/mongodb';
 
@@ -13,6 +13,7 @@ const get = ({ params }) =>
  createGet({
     makeInputObj,
     findDocuments,
+    makeOutputObj,
     logger
   }).get({
     params,
@@ -25,6 +26,7 @@ const post = ({ params }) =>
     makeInputObj,
     insertDocument,
     findDocuments,
+    get,
     logger
   }).post({
     params,
