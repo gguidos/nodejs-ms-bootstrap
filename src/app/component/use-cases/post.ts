@@ -24,7 +24,7 @@ export default function createPost({
         modified: userFactory.modified()
       }
       
-      let query = { hash: user.hash }
+      let query = { $or: [{username: user.username}, { email: user.email }] }
       const checkDuplicate = await findDocuments({ query, dbConfig })
       if (checkDuplicate.length) throw new Error(errorMsgs.EXISTING_USER);
       await insertDocument({ document: user, dbConfig });
