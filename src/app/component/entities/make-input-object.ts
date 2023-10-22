@@ -6,6 +6,7 @@ export default function makeInputObjectFactory({ md5, sanitize }) {
       username,
       password,
       email,
+      role,
       created = Date.now(),
       modified = Date.now()
     } = params;
@@ -14,10 +15,17 @@ export default function makeInputObjectFactory({ md5, sanitize }) {
       username: () => checkUsername({ username, errorMsgs }),
       password: () => checkPassword({ password, errorMsgs }),
       email: () => checkEmail({ email, errorMsgs }),
-      hash: () => md5(username + email),
+      role: () => checkRole({ role }),
+      usernameHash: () => hash({ param: username }),
+      emailHash: () => hash({ param: email }),
+      usernamePasswordHash: () => hash({ param: username + password }),
       created: () => created,
       modified: () => modified
     })
+  }
+
+  function checkRole({ role }) {
+    return role in ['user', 'admin'] ? role : 'user';
   }
 
   function checkUsername({ username, errorMsgs }) {
@@ -36,8 +44,7 @@ export default function makeInputObjectFactory({ md5, sanitize }) {
       paramName: 'password',
       errorMsgs
     });
-    password = sanitize(password);
-    password = hash({ param: password });
+    password = md5(password);
     return password;
   }
 
@@ -54,6 +61,7 @@ export default function makeInputObjectFactory({ md5, sanitize }) {
   }
   
   function hash({ param }) {
+    sanitize(param);
     return md5(param);
   }
 
