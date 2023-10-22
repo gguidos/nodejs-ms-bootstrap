@@ -10,3 +10,4 @@ try {
 } catch (error) {
   logger.error(`[${ name }] Caught exception: ${ error }`);
 }
+
