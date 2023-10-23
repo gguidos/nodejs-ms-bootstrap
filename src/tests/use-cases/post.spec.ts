@@ -38,7 +38,7 @@ describe('Post', () => {
     }
     const results = await post({ params });
     const query = { username: params.username, email: params.email }
-    console.log(query)
+
     const dbContent = await dbFindDocuments({ query, ...config.DB_CONFIG });
     expect(dbContent[0]).to.have.property('username').equal(params.username);
     expect(dbContent.length).to.equal(1);

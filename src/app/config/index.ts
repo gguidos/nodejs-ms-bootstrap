@@ -6,14 +6,14 @@ const FILE_FOLDER_NAME = process.env.NODE_FILE_FOLDER;
 const FILE_FOLDER_PATH = process.cwd() + process.env.NODE_FILE_FOLDER;
 const FILE_DB_NAME = process.env.NODE_DB_FILE;
 const FILE_DB_PATH = `${ FILE_FOLDER_PATH }/${ FILE_DB_NAME }`;
-const MONGO_DB_URL = process.env.MONGO_DB_URL;
-const MONGO_DB_NAME = process.env.MONGO_DB_NAME;
-const MONGO_DB_COLLECTION = process.env.MONGO_DB_COLLECTION;
+const MONGO_DB_URL = process.env.MONGODB_DB_URL;
+const MONGO_DB_NAME = process.env.MONGODB_DB_NAME;
+const MONGO_DB_COLLECTION = process.env.MONGODB_DB_COLLECTION;
 
 const DB_CONFIG = {
   dbName: 'db_my_app',
-  dbUri: `${ process.env.MONGODB_DB_URL}/${ process.env.MONGODB_DB_NAME }`,
-  dbColl: 'coll_users'
+  dbUri: `${ MONGO_DB_URL }/${ MONGO_DB_NAME }`,
+  dbColl: MONGO_DB_COLLECTION
 }
 
 const REDIS_CONFIG = Object.freeze({

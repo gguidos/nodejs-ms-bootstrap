@@ -10,20 +10,17 @@ export default function createGet({
     logger.info(`[USE-CASE][GET] Reading from db - START!`);
     Object.keys(params).forEach(key => params[key] === undefined && delete params[key])
 
-    console.log(params)
     if (Object.values(params).length) {
       const userFactory = makeInputObj({ params });
 
       params = { 
         usernameHash: !params.username ? undefined : userFactory.usernameHash(),
-        emailHash: !params.email ? undefined : userFactory.emailHash(),
-        usernamePasswordHash: !params.usernamePasswordHash ? undefined : userFactory.usernamePasswordHash()
+        emailHash: !params.email ? undefined : userFactory.emailHash()
       };
 
       Object.keys(params).forEach(key => params[key] === undefined && delete params[key])
     }
     
-    console.log(params)
     // 'and' query
     const dbResults = await findDocuments({ query: params, dbConfig });
 
