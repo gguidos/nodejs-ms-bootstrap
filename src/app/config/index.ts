@@ -16,6 +16,13 @@ const DB_CONFIG = {
   dbColl: 'coll_users'
 }
 
+const REDIS_CONFIG = Object.freeze({
+  host: process.env.REDIS_DB_HOST,
+  port: process.env.REDIS_DB_PORT,
+  ttl: process.env.REDIS_DB_TTL,
+  cacheKeyPrefix: `${ APP_NAME }:`
+})
+
 const ERROR_MSG = {
   post: {
     MISSING_PARAMETER: 'missing parameter: ',
