@@ -9,6 +9,11 @@ import {
   getCache as makeGetCache
 } from '../../libs/redis-cache';
 
+import {
+  codeJWT as makeCodeJWT,
+  decodeJWT as makeDecodeJWT
+} from '../../libs/jwt-token'
+
 const insertDocument = ({ document, dbConfig }) =>
   makeInsertDocument({ document, ...dbConfig });
 
@@ -24,10 +29,14 @@ const setCache = ({ data, cacheKey, cacheConfig }) =>
 const getCache = ({ cacheKey, cacheConfig }) =>
   makeGetCache({ cacheKey, cacheConfig });
 
+const codeJWT = ({ data, secret }) => 
+  makeCodeJWT({ data, secret });
+
 export {
   findDocuments,
   insertDocument,
   updateDocument,
   setCache,
-  getCache
+  getCache,
+  codeJWT
 }

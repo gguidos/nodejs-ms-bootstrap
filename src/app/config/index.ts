@@ -9,6 +9,7 @@ const FILE_DB_PATH = `${ FILE_FOLDER_PATH }/${ FILE_DB_NAME }`;
 const MONGO_DB_URL = process.env.MONGODB_DB_URL;
 const MONGO_DB_NAME = process.env.MONGODB_DB_NAME;
 const MONGO_DB_COLLECTION = process.env.MONGODB_DB_COLLECTION;
+const JWT_SECRET = process.env.JWT_TOKEN_SECRET;
 
 const DB_CONFIG = {
   dbName: 'db_my_app',
@@ -16,10 +17,10 @@ const DB_CONFIG = {
   dbColl: MONGO_DB_COLLECTION
 }
 
-const REDIS_CONFIG = Object.freeze({
+const CACHE_CONFIG = Object.freeze({
   host: process.env.REDIS_DB_HOST,
   port: process.env.REDIS_DB_PORT,
-  ttl: process.env.REDIS_DB_TTL,
+  ttl: parseInt(process.env.REDIS_DB_TTL),
   cacheKeyPrefix: `${ APP_NAME }:`
 })
 
@@ -34,6 +35,8 @@ const ERROR_MSG = {
 export default Object.freeze({
   APP_NAME,
   ERROR_MSG,
+  CACHE_CONFIG,
+  JWT_SECRET,
   NODE_ENV,
   NODE_HOSTNAME,
   NODE_PORT,
