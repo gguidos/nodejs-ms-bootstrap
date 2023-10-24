@@ -8,6 +8,6 @@ try {
   logger.info(`[${ config.APP_NAME }] Bootstrapping micro service`);
   server({ hostname: config.NODE_HOSTNAME, port: config.NODE_PORT });
 } catch (error) {
-  logger.error(`[${ name }] Caught exception: ${ error }`);
+  logger.error(`[${ config.APP_NAME }] Caught exception: ${ error }`);
 }
 

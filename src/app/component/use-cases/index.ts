@@ -3,7 +3,12 @@ import createGet from './get';
 import config from '../../config';
 import { logger } from '../../libs/logger';
 import { makeInputObj, makeOutputObj } from '../entities';
-import { insertDocument, findDocuments } from '../data-access';
+import {
+  insertDocument,
+  findDocuments,
+  setCache,
+  codeJWT
+} from '../data-access';
 import { insertOneDocument } from '../../libs/mongodb';
 
 const dbConfig = config.DB_CONFIG;
@@ -27,10 +32,14 @@ const post = ({ params }) =>
     insertDocument,
     findDocuments,
     get,
+    codeJWT,
+    setCache,
     logger
   }).post({
     params,
+    JWTSecret: config.JWT_SECRET,
     dbConfig: config.DB_CONFIG,
+    cacheConfig: config.CACHE_CONFIG,
     errorMsgs: errorMsgs.post
   });
 
